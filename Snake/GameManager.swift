@@ -16,7 +16,7 @@ class GameManager {
     var nextTime: Double?
     var timeExtension: Double = 1
     //1
-    var playerDirection: Int = 1
+    var playerDirection: Int = 4
     
     init(scene: GameScene) {
         self.scene = scene
