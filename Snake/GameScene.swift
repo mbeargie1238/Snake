@@ -20,17 +20,48 @@ class GameScene: SKScene {
     var playerPositions: [(Int, Int)] = []
     var gameBG: SKShapeNode!
     var gameArray: [(node: SKShapeNode, x: Int, y: Int)] = []
+    //1
+    var scorePos: CGPoint?
     
     override func didMove(to view: SKView) {
         
         //2
         initializeMenu()
-        
         game = GameManager(scene: self)
-        
         //2
         initializeGameView()
+        
+        //1
+        let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeR))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeL))
+        swipeLeft.direction = .left
+        view.addGestureRecognizer(swipeLeft)
+        
+        let swipeUp:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeU))
+        swipeUp.direction = .up
+        view.addGestureRecognizer(swipeUp)
+        
+        let swipeDown:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeD))
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
     
+    }
+    
+    //2
+    @objc func swipeR() {
+        game.swipe(ID: 3)
+    }
+    @objc func swipeL() {
+        game.swipe(ID: 1)
+    }
+    @objc func swipeU() {
+        game.swipe(ID: 2)
+    }
+    @objc func swipeD() {
+        game.swipe(ID: 4)
     }
     
     //3
@@ -150,7 +181,7 @@ class GameScene: SKScene {
         bestScore.zPosition = 1
         bestScore.position = CGPoint(x: 0, y: gameLogo.position.y - 50)
         bestScore.fontSize = 40
-        bestScore.text = "Best Score: 0"
+        bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
         bestScore.fontColor = SKColor.white
         self.addChild(bestScore)
         //Create play button
